@@ -1,9 +1,9 @@
 <?php
+require_once 'Controller.php';
 
-namespace rutas\Controladores;
-
-class HomeController
+class HomeController extends Controller
 {
+
     /**
      * This renders the index view.
      *
@@ -13,7 +13,8 @@ class HomeController
     public static function index()
     {
         // your index view here
-        render_view('home', [], 'home');
+        render_view('home', [], 'Home');
     }
 
+    // define your other methods here
 }
