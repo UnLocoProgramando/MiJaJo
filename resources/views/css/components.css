@@ -16,12 +16,12 @@ a, button{
     text-decoration: none;
 }
 a.main-action-bright{
-    background-color: var(--white-color);
-    color: var(--secondary-color-default);
+    background-color: var(--tercero-color-defautl);
+    color: var(--main-color-default);
     box-shadow: var(--shadow-soft);
     font-weight: 300;
-    border: 1px solid var(--secondary-color-default);
-    border-bottom: 4px solid var(--secondary-color-default);
+    border: 1px solid var(--main-color-default);
+    border-bottom: 4px solid var(--tercero-color-defautl);
     font-weight: 600;
     width: fit-content;
 
@@ -57,7 +57,7 @@ a:hover, button:hover{
 
 a.plain-action{
     background-color: transparent;
-    color: black;
+    color: #333333;
     box-shadow: none;
     border: none;
     text-decoration: none;

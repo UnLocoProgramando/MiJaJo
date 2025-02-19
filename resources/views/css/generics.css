@@ -36,7 +36,7 @@
 .form-rounded{
     border-radius: 28px;
     padding: 10px 15px;
-    border: 1px solid black;
+    border: 1px solid #4e4e4e;
     cursor: pointer;
 }
 

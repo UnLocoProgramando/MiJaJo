@@ -3,7 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/<?= asset("logo/SVG/vetcamp_iso_p.svg") ?>" type="image/x-icon">
+    <!-- Imagen en el browser -->
+    <link rel="shortcut icon" href="/<?= asset("logo/PNG/JotaLogo.png") ?>" type="image/x-icon">
 
     <!-- CSS -->
 
@@ -33,6 +34,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 
-    <title><?= $page_title ?? 'Vetcamp' ?></title>
+    <title><?= $page_title ?? 'JotaWear' ?></title>
 </head>
 

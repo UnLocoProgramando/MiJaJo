@@ -17,7 +17,8 @@
     padding: 14.3rem 2em;
     background-color: var(--main-color-default);
     text-align: center;
-    background-image: url(../../assets/img/doggo4.webp);
+    /* Foto que me envio janyo*/
+    background-image: url(../../assets/background/PNG/back.webp);
     background-repeat: no-repeat;
     background-size: 200vh;
     background-position: bottom;
@@ -33,7 +34,7 @@
     line-height: 1em;
     max-width: 600px;
     margin: 1em auto;
-    color: var(--white-color);
+    color: var(--secondary-color-default);
     text-shadow: var(--shadow-hard);
 }
 
@@ -62,8 +63,8 @@
 /* Objectives Section */
 
 .objectives-carroussel {
-    background-color: var(--secondary-color-default);
-    color: var(--white-color);
+    background-color: var(--main-color-default);
+    color: var(--secondary-color-default);
     padding: 1rem;
 }
 
@@ -97,13 +98,13 @@
     display: block;
     width: 40px;
     height: 40px;
-    background-color: var(--white-color);
+    background-color: var(--main-color-default);
     color: var(--secondary-color-default);
     border-radius: 50%;
     cursor: pointer;
     font-size: 1.5em;
     text-align: center;
-    border: 1px solid var(--secondary-color-default);
+    border: 1px solid var(--main-color-shade-1);
 
     transition: all 0.25s ease;
 }
@@ -120,7 +121,7 @@
 }
 
 .c-action:hover {
-    background-color: var(--white-color-shade-1);
+    background-color: var(--main-color-shade-1);
 }
 
 .objectives {
@@ -170,15 +171,12 @@
 }
 
 .shade-1 {
-    background-color: var(--main-color-default);
-}
-.shade-2 {
     background-color: var(--main-color-shade-1);
 }
-.shade-3 {
+.shade-2 {
     background-color: var(--main-color-shade-2);
 }
-.shade-4 {
+.shade-3 {
     background-color: var(--main-color-shade-3);
 }
 
@@ -187,43 +185,6 @@
 }
 .min-margin b {
     font-weight: bold;
-}
-
-/* Requisites section */
-
-.req-card {
-    padding: 1rem;
-    margin: 1rem;
-    border-radius: 7px;
-    border: 1px solid var(--secondary-color-default);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    color: var(--secondary-color-default);
-    gap: 1em;
-    text-align: left;
-    transition: all 0.2s ease;
-}
-
-.req-card:hover {
-    box-shadow: var(--shadow-soft);
-    background-color: var(--white-color);
-}
-
-.req-card i {
-    font-size: 3.5em;
-}
-
-.req-card h4 {
-    font-weight: bold;
-    font-size: 1.5em;
-}
-
-.requirement-cards-grid {
-    padding: 2em var(--main-margin);
-    display: grid;
-    grid-template-columns: 1fr;
 }
 
 /* Contact Section */
@@ -316,7 +277,7 @@ footer .university-logo {
     }
 
     .carrousel-actions {
-        justify-content: start;
+        justify-content: center;
     }
 
     .block p {
