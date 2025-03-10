@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once __DIR__ . '/partials/header.php';
 
 
 // crafting google search for error url

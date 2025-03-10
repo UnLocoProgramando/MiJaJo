@@ -1,86 +1,169 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php
-require __DIR__ . '/partials/header.php';
-?>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JotaWear</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="shortcut icon" href="/<?= asset("logo/PNG/JotaLogo.png") ?>" type="image/x-icon">
+    <link rel="stylesheet" href="<?= web_resource("css/stylehome.css") ?>">
+</head>
 <body>
-<!-- <div class="top-lbl">
-    <p style="font-weight: bold;">DO NOT SHOW TO STAKEHOLDERS | WEBSITE UNDER CONSTRUCTION</p>
-</div> -->
-<header class="navbar">
-    <img class="logotype" src="<?= asset('logo/PNG/JotaLogo.png') ?>" alt="Jota's Wear Logo">
+<!--- header start --->
+<header>
+    <ul class="navbar">
+        <li><a href="#contact">Menu</a></li>
+        <li><a href="/buscar">Buscar</a></li>
+    </ul>
+
+    <a href="/" class="logo">Jota's Wear</a>
+    <div class="bx bx-menu" id="menu-icon"></div>
+
+    <div class="icons">
+        <a href="/buscar"><i class='bx bx-search'></i></a>
+        <a href="/registrar"><i class='bx bxs-user' ></i></a>
+        <a href="/carrito"><i class='bx bx-cart'></i></i></a>
+    </div>
 </header>
-<div class="hero">
-    <h1>¡Somos la Moda!</h1>
-    <a class="main-action-bright" href="/register">Registrate</a>
-</div>
+<main>
+    <div class="hero"></div>
 
-<div class="splitted-header">
-    <h3>Jota's Wear</h3>
-    <p>
-        Bienvenidos a Jota's Wear. Aquí podrás encontrar ropa
-        de calidad tanto para hombres, mujeres y niñ@s.
-        <br> <br>
-        Trabajamos todo por Colecciones limitadas, solo se crean
-        25 piezas de cada drop, para hacerlo aún más auténtico.
-        Hacemos Envío Gratis a Puerto Rico y Estados Unidos.
-    </p>
-</div>
+    <section>
+        <p>Jota's Wear se enfoca en Calidad y Exclusividad, es por eso que cada colección es limitada a 25 piezas. . . Dando un toque único y especial en cada producción, las cuales niños, hombres y mujeres pueden usar.</p>
+    </section>
+    <section>
+        <h1>Colecciones:</h1>
+    </section>
 
-<div class="objectives-carroussel">
-    <div class="carroussel-wrapper">
-
-        <h1 style="align-content: center">Algo Sobre Nosotros</h1>
-        <div class="carroussel">
-            <img src="https://placehold.co/600x400" alt="a python snake">
-            <img src="https://placehold.co/600x400" alt="a python snake">
-            <img src="https://placehold.co/600x400" alt="a python snake">
-            <img src="https://placehold.co/600x400" alt="a python snake">
+    <div class="shop" id="shop">
+        <h1>Marzo Street Vibes</h1>
+        <div class="container">
+            <div class="box">
+                <img src="<?= asset('col2/jota1.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col2/jota2.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col2/jota3.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
         </div>
+
+        <h1>San valentin</h1>
+        <div class="container">
+            <div class="box">
+                <img src="<?= asset('col1/jota1.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col1/jota2.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col1/jota3.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col1/jota4.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <img src="<?= asset('col1/jota5.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <img src="<?= asset('col1/jota6.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-    <div class="carrousel-actions">
-        <div onclick="scroll_by_left()" id="scroll-action-l" class="c-action scroll-left">
-            <i class="las la-angle-left"></i>
+    <!--- contact start --->
+    <section class="contact" id="contact">
+        <div class="main-contact">
+            <div class="contact-content">
+                <li><a href="#contact">Menu</a></li>
+                <li><a href="/buscar">Buscar</a></li>
+                <li><a href="/registrar">Suscríbete</a></li>
+                <li><a href="/carrito">Carrito de compras</a></li>
+            </div>
+
+            <div class="contact-content">
+                <li><a href="/devolucion">Envío y devolución</a></li>
+                <li><a href="/politica">Política de la tienda</a></li>
+                <li><a href="/metododepago">Métodos de pago</a></li>
+            </div>
+
+            <div class="contact-content">
+                <li><a href="/contacto">Contact:</a></li>
+                <li><a href="/contacto">jotaswear24@gmail.com</a></li>
+            </div>
+
+            <div class="contact-content">
+                <!--- Link de las redes sociales --->
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+            </div>
+
         </div>
-        <div onclick="scroll_by_right()" id="scroll-action-r" class="c-action scroll-right">
-            <i class="las la-angle-right"></i>
+
+        <div class="action">
+            <form>
+                <input type="email" name="email" placeholder="Your email" required>
+                <input type="submit" name="submit" value="Submit" required>
+            </form>
         </div>
+
+    </section>
+
+    <div class="last">
+        <p>2024 by Jota's Wear</p>
     </div>
 
-</div>
-
-
-
-
-<div class="sections-dynamic">
-    <div class="splitted-header">
-        <div class="block">
-            <h3>Colecciones Disponibles</h3>
-        </div>
-
-        <p>¡Compra Ahora!</p>
-    </div>
-
-    <div class="sections-blocked-dynamic ">
-        <div class="section-block shade-1">
-            <h1>Colección 1</h1>
-            <p>San Valentín</p>
-        </div>
-        <div class="section-block shade-2">
-            <h1>3 al 7 de junio de 2024</h1>
-            <p>Sección 2</p>
-        </div>
-        <div class="section-block shade-3">
-            <h1>3 al 7 de junio de 2024</h1>
-            <p>Sección 3</p>
-        </div>
-    </div>
-</div>
-
-<?php require_once('partials/footer.php'); ?>
-
+</main>
+<!--- Custom js link --->
+<script src="<?= asset('js/script.js') ?>"></script>
 </body>
-
 </html>
-
