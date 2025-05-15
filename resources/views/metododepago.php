@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JotaWear Buscar</title>
+    <title>JotaWear</title>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="shortcut icon" href="/<?= asset("logo/PNG/JotaLogo.png") ?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?= web_resource("css/stylepago.css") ?>">
+    <link rel="stylesheet" href="<?= web_resource("css/stylehome.css") ?>">
 </head>
 <body>
 <!--- header start --->
@@ -19,20 +19,42 @@
     <a href="/" class="logo">Jota's Wear</a>
     <div class="bx bx-menu" id="menu-icon"></div>
 
+    <!-- Intentando que funcione el login ayudame Dios -->
     <div class="icons">
+
+        <!-- Div donde aparece el correo electrónico y el menú emergente -->
+        <?php if (isset($_SESSION["email"])): ?>
+            <div class="user-email-container">
+                <span class="user-email" id="user-email"><?= htmlspecialchars($email) ?></span>
+                <div class="user-menu" id="user-menu">
+                    <a href="#">Editar perfil</a>
+                    <a href="/registrar/cerrarsesion">Cerrar sesión</a>
+                </div>
+            </div>
+        <?php else: ?>
+            <a href="/registrar"><i class='bx bxs-user'></i></a>
+        <?php endif; ?>
+
+
+        <a href="/carrito"><i class='bx bx-cart'></i></a>
         <a href="/buscar"><i class='bx bx-search'></i></a>
-        <a href="/registrar"><i class='bx bxs-user' ></i></a>
-        <a href="/carrito"><i class='bx bx-cart'></i></i></a>
     </div>
+
 </header>
 <!--- header end --->
 <main>
-    <!--- buscar start --->
+    <div class="hero"></div>
+
     <section>
-        <p>Esta sección se explicará los métodos de pago de la tienda</p>
+        <h1>Metodos de pago</h1>
     </section>
-    <!--- buscar end --->
+
+    <section>
+        <p>Los metodos de pago</p>
+    </section>
+
     <!--- contact start --->
+    <!--- Esta sección se llama contacto pero es un footer --->
     <section class="contact" id="contact">
         <div class="main-contact">
             <div class="contact-content">
@@ -67,12 +89,14 @@
                 <input type="submit" name="submit" value="Submit" required>
             </form>
         </div>
+        <!--- Se acabó el supuesto footer --->
 
     </section>
 
     <div class="last">
         <p>2024 by Jota's Wear</p>
     </div>
+
 </main>
 <!--- Custom js link --->
 <script src="<?= asset('js/script.js') ?>"></script>

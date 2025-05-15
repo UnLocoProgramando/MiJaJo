@@ -35,9 +35,48 @@ switch ($path) {
     case '/registrar':
         RegistrarController::index();
         break;
+    case '/registrar/user':
+        // Obtener los valores del formulario para enviarlo al controlador
+        if($method === 'POST'){
+            $email = $_POST['email'] ?? '';
+            $existe = false;
+            $esUser = "user";
+            try {
+                if (UserModel::existeEnLaDB(['email' => $email])) {
+                    $existe = true;
+                    $usuario = UserModel::buscarEnLaDB($email, 'email');
+                    $esUser = $usuario->tipo;
+                }
+            } catch (ModelNotFoundException $e) {
+                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+            }
+        }
+        header("Location: /");
+        RegistrarController::registrarUsuario($email, $existe, $esUser);
+        break;
+    case '/registrar/cerrarsesion':
+        session_start(); // Iniciar sesión
+        session_unset(); // Eliminar todas las variables de sesión
+        session_destroy(); // Destruir la sesión completamente
+        header("Location: /");
+        exit; // Asegurar que el script se detenga aquí
     case '/carrito':
         CarritoController::index();
         break;
+    case '/carrito/agregar':
+        $id = $_POST['id'] ?? null;
+        CarritoController::agregarProducto($id);
+        break;
+    case '/carrito/actualizar':
+        $id = $_GET['id'];
+        $accion = $_GET['accion'];
+        CarritoController::actualizar($id, $accion);
+        break;
+    case '/carrito/eliminar':
+        $id = $_GET['id'];
+        CarritoController::eliminar($id);
+        break;
+
     case '/devolucion':
         DevolucionController::index();
         break;
@@ -54,6 +93,76 @@ switch ($path) {
     case '/admin':
         BackDashboardController::index();
         break;
+    case '/admin/formulariocoleccion':
+        BackDashboardController::renderizarFormularioCollecion();
+        break;
+    case '/admin/agregrarcoleccion':
+        // Obtener los valores del formulario para enviarlo al controlador
+        if($method === 'POST') {
+            $collection_name = $_POST['collection_name'] ?? '';
+            BackDashboardController::agregarColeccion($collection_name);
+        }
+        redirect("/admin");
+        break;
+    case '/admin/formulariocamisa':
+        BackDashboardController::renderizarFormularioCamisa();
+        break;
+
+    case '/admin/agregarcamisa':
+        // Obtener los valores del formulario para enviarlo al controlador
+        if($method === 'POST') {
+            $shirt_name = $_POST['shirt_name'] ?? '';
+            $shirt_categoria = 'camisa';
+            $shirt_stock = 25;
+            $shirt_price = $_POST['shirt_price'] ?? '';
+
+            // Validaciones básicas
+            if (!isset($_FILES['shirt_image']) || $_FILES['shirt_image']['error'] !== UPLOAD_ERR_OK) {
+                // manejar error
+                redirect('/admin?error=subida_imagen');
+                break;
+            }
+
+            $tmpFile = $_FILES['shirt_image']['tmp_name'];
+            $collection_id = $_POST['collection_id'] ?? '';
+
+            // Obtener cuántas camisas hay en la colección
+            $cantidadCamisas = ArticuloModel::contarPorID($collection_id, 'id_coleccion');
+            $numeroCamisa = $cantidadCamisas + 1;
+
+            $relativePath = "col{$collection_id}/jota{$numeroCamisa}.png";
+
+            if (!storeAsset($relativePath, $tmpFile)) {
+                redirect('/admin?error=guardar_imagen');
+                break;
+            }
+            BackDashboardController::agregarCamisa($shirt_name, $shirt_categoria, $shirt_stock, $shirt_price, $relativePath, $collection_id);
+
+        }
+        redirect("/admin");
+        break;
+    case '/admin/alluser':
+        BackDashboardController::alluser();
+        break;
+    case '/admin/allcoleciones':
+        BackDashboardController::allColeccion();
+        break;
+    case '/admin/allarticulos':
+        BackDashboardController::allArticulo();
+        break;
+    case '/admin/borrarusuario':
+        $id = $_GET['id'] ?? null;
+        BackDashboardController::borrarUsuario($id);
+        break;
+    case '/admin/borrarcoleccion':
+        $id = $_GET['id'] ?? null;
+        BackDashboardController::borrarColeccion($id);
+        break;
+    case '/admin/borrararticulo':
+        $id = $_GET['id'] ?? null;
+        BackDashboardController::borrarArticulo($id);
+        break;
+    // END BACK VIEWS
     default:
         abort(404, 'Page was not found');
         break;

@@ -242,3 +242,33 @@ function abort(int $code, string $message = '') {
 function get_config(string $type, string $title, string $default = null) {
     return CONFIG[$type][$title] ?? $default;
 }
+
+/**
+ * Save a file in the assets folder so that it can be accessed with the function asset().
+ *
+ * @param string $relativePath Relative path. EJ:'img/homePage/picture1.png'
+ * @param string $tmpFile Temp path
+ * @return bool return true if save successful, otherwise return false
+ */
+function storeAsset(string $relativePath, string $tmpFile): bool
+{
+    $assetsAbsolute = realpath(__DIR__ . '/../../') . '/resources/assets';
+
+    if ($assetsAbsolute === false) {
+        return false;
+    }
+
+    if (substr($assetsAbsolute, -1) !== '/' && substr($assetsAbsolute, -1) !== '\\') {
+        $assetsAbsolute .= '/';
+    }
+
+    // Where the file will be saved
+    $fullPath = $assetsAbsolute . ltrim($relativePath, '/');
+
+    $directory = dirname($fullPath);
+    if (!file_exists($directory)) {
+        mkdir($directory, 0777, true);
+    }
+
+    return move_uploaded_file($tmpFile, $fullPath);
+}

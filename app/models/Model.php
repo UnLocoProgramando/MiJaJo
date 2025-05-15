@@ -9,7 +9,6 @@ class Model
     protected $attributes = []; // The attributes of the model
     public $values = []; // The sanitized values of the model
     private static $initialized = false; // A flag indicating whether the model has been initialized
-
     protected static $primary_key = 'id'; // The primary key of the model
     protected static $hidden = [];  // An array of attributes that should not be serialized
 
@@ -22,8 +21,45 @@ class Model
      */
     protected function __construct(array $attributes, array $sanitized){
         self::init();
-        self::set_attributes($attributes);
+        $this->set_attributes($attributes); // Cambiar `self::` por `$this->`
         $this->values = $sanitized;
+    }
+
+    // Método mágico __get()
+    public function __get($key)
+    {
+        return $this->attributes[$key] ?? null; // Devuelve el valor de los atributos o null si no existe
+    }
+
+
+    /**
+     * Sanitiza los valores del modelo para evitar ataques de inyección SQL o XSS.
+     *
+     * @param array $data Los datos a sanitizar.
+     * @return array Los datos sanitizados.
+     */
+    private static function sanitize(array $data)
+    {
+        $sanitized = [];
+        foreach ($data as $key => $value) {
+            if ($value === null) {
+                $sanitized[$key] = null; // Mantener null si el valor original es null
+            } else {
+                $sanitized[$key] = htmlspecialchars(strip_tags($value));
+            }
+        }
+        return $sanitized;
+    }
+
+
+    /**
+     * Asigna los atributos al modelo.
+     *
+     * @param array $attributes Los atributos a asignar.
+     */
+    private function set_attributes(array $attributes)
+    {
+        $this->attributes = $attributes;
     }
 
 
@@ -34,7 +70,7 @@ class Model
      *
      * @return void
      */
-    private static function init()
+    protected static function init()
     {
         DB::connect(CONFIG['database'], CONFIG['database']['user'], CONFIG['database']['pass']);
 
@@ -49,6 +85,57 @@ class Model
         self::$initialized = true;
     }
 
+    /**
+     * Almacena una instancia en la base de datos. La tabla es escogida
+     * por el hijo de este modelo
+     *
+     * @param array $data Este arreglo almacena los datos de la instancia.
+     *
+     * @return void
+     */
+    public static function insertDB(array $data)
+    {
+        self::init();
+        DB::insertar(static::$table, $data);
+    }
+
+    /**
+     * Operacion SELECT de sql.
+     *
+     * @param array $columnas Las columnas que desea proyectar. Si
+     * este parametro no se envia se asume que son toda las columnas
+     *
+     * @return model_list el modelo
+     */
+    public static function selectDB(array $columnas = ['*'])
+    {
+        self::init();
+        $model_list = [];
+        foreach (DB::select(static::$table, $columnas) as $model) {
+            $model_list[] = new static($model, self::sanitize($model));
+        }
+        return $model_list;
+    }
+
+    public static function existeEnLaDB(array $data): bool
+    {
+        self::init(); // Asegura que la conexión está establecida
+        $resultado = DB::where(static::$table, $data);
+
+        return !empty($resultado); // Devuelve true si hay al menos un resultado, false si no hay coincidencias
+    }
+
+    public static function buscarEnLaDB(string $value, string $column = null, string $table = null): Model
+    {
+        self::init();
+        $data = DB::whereONE($table ?? static::$table, $column ?? static::$primary_key, $value);
+
+        if (empty($data)) {
+            throw new ModelNotFoundException('There is no record with the given value: ' . $value);
+        }
+
+        return new static($data, self::sanitize($data));
+    }
 
     /**
      * Returns all records from the associated table.
@@ -57,221 +144,33 @@ class Model
      *               column, and the value is the value of that column in the
      *               database.
      */
-    public static function all() {
+    public static function all()
+    {
         self::init();
 
         $model_list = [];
-        foreach(DB::select(static::$table, '*') as $model) {
+        foreach (DB::select(static::$table, ['*']) as $model) {
             $model_list[] = new static($model, self::sanitize($model));
         }
 
         return $model_list;
     }
 
-    /**
-     * Returns attributes by key (getter function)
-     */
-    public function __get($key)
+    public static function contarPorID(string $value, string $column = null, string $table = null): int
     {
-        return $this->attributes[$key] ?? null;
-    }
-
-
-    /**
-     * Returns all records from the associated table where the specified column
-     * matches the given value.
-     *
-     * @param int $id The value to match in the database.
-     * @param string|null $column The column to use in the WHERE clause. If not
-     *                            specified, the primary key column is used.
-     *
-     * @return Model An instance of the Model class containing the matching records.
-     *
-     * @throws ModelNotFoundException If no records are found with the specified id.
-     */
-    public static function findAll(int $id, string $column = null) : Model {
         self::init();
-
-        $data = DB::whereAll(static::$table, $column ?? static::$primary_key, $id);
-
-        if (empty($data)) {
-            throw new ModelNotFoundException('There is no record with the id given:  ' . $id);
-        } else {
-            return new static($data, self::sanitize($data));
-        }
-
-
+        $resultado = DB::contar(
+            $table ?? static::$table,
+            $column ?? static::$primary_key,
+            $value
+        );
+        return $resultado['total'] ?? 0;
     }
 
-
-    /**
-     * Returns a single record from the associated table where the specified
-     * column matches the given value.
-     *
-     * @param int $id The value to match in the database.
-     * @param string $column The column to use in the WHERE clause.
-     *
-     * @return Model The model instance with the matching record.
-     *
-     * @throws ModelNotFoundException If the record is not found.
-     */
-    public static function find(int $id, string $column = null) : Model {
-        self::init();
-
-        $data = DB::where(static::$table, $column ?? static::$primary_key, $id);
-
-        if (empty($data)) {
-            throw new ModelNotFoundException('There is no record with the id given: ' . $id);
-        } else {
-            return new static($data, self::sanitize($data));
-        }
-
-    }
-
-
-    /**
-     * Finds a record in the associated table with the given data
-     *
-     * @param array $data An associative array with the column(s) to search as
-     *                    the key(s) and the value(s) as the value(s) to match
-     *
-     * @return Model The model instance with the matching record.
-     *
-     * @throws ModelNotFoundException If the record is not found.
-     */
-    public static function findBy(array $data) : Model {
-        self::init();
-        $data = DB::whereColumns(static::$table, $data);
-
-        if (empty($data)) {
-            throw new ModelNotFoundException('There is no record with the data given');
-        }
-
-        return new static($data, self::sanitize($data));
-    }
-
-
-    /**
-     * Creates a new model and stores it to the database.
-     *
-     * @param array $data The data to create the model with.
-     *
-     * @return Model The newly created model instance.
-     */
-    public static function create(array $data) : Model
+    public static function borrarDB(int $id)
     {
-        $newModel = new static($data, self::sanitize($data));
-        $newModel->store();
-
-        return $newModel;
-
+        self::init(); // Asegúrate de que esto conecte bien con la base
+        DB::borrar(static::$table, static::$primary_key, $id);
     }
-
-
-    /**
-     * Sets the value of a model attribute.
-     *
-     * @param string $attribute The name of the attribute to set.
-     * @param mixed $value The value to set for the attribute.
-     *
-     * @return bool Returns true if the attribute was successfully set, otherwise false.
-     */
-    public function set($attribute, $value) : bool {
-        if (!array_key_exists($attribute, $this->attributes)) {
-            return false;
-        }
-
-        $this->attributes[$attribute] = $value;
-        $this->values[$attribute] = $value;
-
-        return true;
-    }
-
-
-    /**
-     * Updates the model attributes with the provided data array.
-     *
-     * Iterates over the given data array and updates the model's attributes
-     * if the keys exist in the current attributes. The method uses the `set`
-     * function to update each attribute.
-     *
-     * @param array $data An associative array where keys are attribute names
-     *                    and values are the new values for those attributes.
-     *
-     * @return bool Returns true after updating the attributes.
-     */
-    public function update(array $data) : bool {
-
-        foreach ($data as $key => $value) {
-            if(!array_key_exists($key, $this->attributes)) {
-                continue;
-            }
-
-            $this->set($key, $value);
-        }
-
-        $this->save();
-
-        return true;
-
-    }
-
-
-    /**
-     * Inserts a new record into the associated table using the current model attributes.
-     *
-     * @return bool Returns true if the record was successfully inserted, otherwise false.
-     */
-    public function save() : bool
-    {
-        return DB::update(static::$table, $this->values, static::$primary_key, $this->attributes[static::$primary_key]);
-    }
-
-
-    /**
-     * Creates a new record in the associated table using the current model attributes.
-     *
-     * @return bool Returns true if the record was successfully inserted, otherwise false.
-     */
-    public function store() : bool {
-        return DB::insert(static::$table, $this->attributes);
-    }
-
-    /**
-     * Sets the model attributes from the given associative array.
-     *
-     * @param array $data The associative array where the keys are the column
-     *                    names and the values are the values of the columns.
-     *
-     * @return void
-     */
-
-    private function set_attributes(array $data) {
-        foreach ($data as $key => $value) {
-            $this->attributes[$key] = $value;
-        }
-    }
-
-
-
-    /**
-     * Removes specified attributes from the given data array.
-     *
-     * This method iterates over the `hidden` attributes of the model
-     * and unsets them from the provided data array, effectively
-     * sanitizing the data by excluding sensitive or unwanted information.
-     *
-     * @param array $data The associative array of data to be sanitized.
-     *
-     * @return array The sanitized data array with hidden attributes removed.
-     */
-    private static function sanitize(array $data) {
-        foreach(static::$hidden as $to_hide) {
-            unset($data[$to_hide]);
-        }
-        return $data;
-    }
-
-
 
 }

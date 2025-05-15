@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
 
-<body>
+<body style="background: black;">
 <!-- Main Dashboard Content -->
 <div class="dashboard-container">
     <!-- Side Menu -->
@@ -41,13 +41,15 @@
             </div>
         </div>
 
-        <div class="lista-box">
-            <div class="lista-funcionalidades">
-                <h2>Funcionalidades</h2>
-                <ul>
-                    <li><span>1</span><a href="/admin/formulariocoleccion">Agregar Nueva Colección</a></li>
-                    <li><span>2</span><a href="/admin/formulariocamisa"> Agregar Nueva Camisa</a></li>
-                </ul>
+        <div class="formulariocolleciones">
+            <p style="color: white">Hola mundo</p>
+            <div class="form-container">
+                <h2>Agregar Nueva Colección</h2>
+                <form action="/admin/agregrarcoleccion" method="POST">
+                    <label for="collection-name">Nombre de la Colección</label>
+                    <input type="text" id="collection-name" name="collection_name" placeholder="Ej. Verano 2025" required>
+                    <button type="submit">Agregar Colección</button>
+                </form>
             </div>
         </div>
     </div>

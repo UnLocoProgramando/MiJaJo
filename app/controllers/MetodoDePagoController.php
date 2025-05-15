@@ -10,8 +10,14 @@ class MetodoDePagoController extends Controller
      */
     public static function index()
     {
+        // Verifica si la sesión está iniciada
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start(); // Iniciar sesión solo si no está activa
+        }
+
+        $email = $_SESSION['email'] ?? null; // Obtener email de la sesión
         // Now call render_view with the defined variables
-        render_view('metododepago', [], 'metododepago');
+        render_view('metododepago', ['email'=>$email], 'metododepago');
     }
 
 }

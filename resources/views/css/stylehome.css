@@ -1,7 +1,6 @@
 * {
     padding: 0;
     margin: 0;
-    box-sizing: 0;
     box-sizing: border-box;
     text-decoration: none;
     list-style: none;
@@ -54,8 +53,10 @@ section h1 {
     text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.2); /* Sombra ligera */
 }
 /* navbar new */
-header{
+header {
     width: 100%;
+    max-height: 100px; /* Ajusta este valor según el diseño */
+    min-height: 60px;  /* Asegura que no sea demasiado pequeño */
     top: 0;
     right: 0;
     z-index: 1000;
@@ -65,15 +66,29 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 25px 8%;
+    padding: 20px 8%;
     transition: .3s;
 }
+
+
 .logo{
     color: white;
     font-size: 2.2rem;
     font-weight: 600;
     line-height: 0.8;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
 }
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+
 #menu-icon{
     font-size: 38px;
     color: white;
@@ -98,9 +113,56 @@ header{
     color: black;
 }
 
-.icons{
-    display: inline-block;
+.icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 180px; /* Ajusta este valor según el diseño */
+    gap: 15px;
 }
+
+
+/* Estilo para el correo electrónico */
+.icons .user-email {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Estilo para el menú emergente */
+.user-menu {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 50px; /* Ajusta la posición según el diseño */
+    right: 10px;
+    background-color: black;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.user-menu a {
+    display: block;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #444;
+    transition: background-color 0.3s;
+}
+
+.user-menu a:hover {
+    background-color: #333;
+}
+
+/* Estilo para mostrar el menú cuando está activo */
+.user-menu.active {
+    display: block;
+}
+
 
 .icons i{
     color: white;
@@ -127,59 +189,99 @@ header{
     letter-spacing: 2px;
 }
 
-.container{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(360px, auto));
-    align-items: center;
-    gap: 2rem;
-    text-align: center;
-    cursor: pointer;
-    padding-top: 2rem;
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra los elementos */
+    gap: 20px;
+    padding: 20px;
 }
 
-.box{
-    padding: 0px 20px 10px 20px;
-    background: transparent;
-    box-shadow: 5px 30px 56.1276px rgb(55, 55, 55 / 12%);
-    border-radius: 10px;
-    positon: relative;
-    transition: all .35s ease;
-}
 
-.box img{
+.box {
+    max-width: 250px; /* Tamaño máximo del contenedor */
     width: 100%;
-    height: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    text-align: center;
+    padding-bottom: 15px;
 }
 
-.box h4{
-    font-size: 15px;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
 
-.box h5{
-    font-size: 14px;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-}
-
-.box .cart i{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 35px;
-    height: 35px;
-    background: black;
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-}
-
-.box:hover{
+.box:hover {
     transform: translateY(-5px);
 }
+
+.box img {
+    width: 100%;
+    height: 250px; /* Altura fija para todas las imágenes */
+    object-fit: cover; /* Recorta la imagen sin distorsionarla */
+    border-bottom: 1px solid #ddd;
+}
+
+
+.product-info {
+    padding: 15px;
+}
+
+.product-info h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.product-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.product-info h5 {
+    font-size: 18px;
+    color: #d9534f;
+    margin: 10px 0;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn.add-to-cart {
+    background: black;
+    color: white;
+}
+
+.btn.add-to-cart:hover {
+    background: #333;
+}
+
+.btn.view {
+    background: white;
+    border: 1px solid black;
+    color: black;
+}
+
+.btn.view:hover {
+    background: black;
+    color: white;
+}
+
 
 /* Footer new */
 .contact{
@@ -251,6 +353,181 @@ header{
     font-weight: 600;
     letter-spacing: 2px;
 }
+
+/* Contenedor del correo y el menú */
+.user-email-container {
+    position: relative;
+    display: inline-block;
+    min-width: 150px; /* Ajusta según el diseño */
+    text-align: right;
+}
+
+/* Estilo para el correo electrónico */
+.user-email {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.user-email:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo para el menú emergente */
+.user-menu {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 35px; /* Ajusta la posición para que no se superponga con el correo */
+    right: 0;
+    background-color: black;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.user-menu a {
+    display: block;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #444;
+    transition: background-color 0.3s;
+}
+
+.user-menu a:last-child {
+    border-bottom: none;
+}
+
+.user-menu a:hover {
+    background-color: #333;
+}
+
+/* Clase para mostrar el menú */
+.user-menu.active {
+    display: block;
+}
+
+/* Contenedor del formulario */
+/* Etiqueta del formulario */
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 8%;
+    text-align: center;
+}
+
+.formulario p {
+    font-size: 1.8em;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* Contenedor del formulario */
+.formulario form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Estilo para label e input juntos */
+.formulario form label {
+    margin-right: 10px; /* Espacio entre el label y el input */
+    font-size: 1rem;
+    color: black;
+    font-weight: bold;
+}
+
+.formulario form .input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.formulario form input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    background: black;
+    color: white;
+}
+
+.formulario form input[type="email"]::placeholder {
+    color: gray;
+}
+
+.formulario .submit-button {
+    background: black;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.formulario .submit-button:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+}
+
+/* Carrito para el header */
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0 6px;
+    font-size: 12px;
+}
+.carrito-icon {
+    position: relative;
+}
+
+.menu-carrito {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+    padding: 20px;
+    transition: left 0.3s ease;
+    z-index: 999;
+}
+.menu-carrito.active {
+    right: 0;
+}
+.menu-carrito button {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 
 @media (max-width: 800px) {
     .hero {

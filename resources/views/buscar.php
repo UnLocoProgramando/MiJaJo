@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JotaWear Buscar</title>
+    <title>JotaWear</title>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="shortcut icon" href="/<?= asset("logo/PNG/JotaLogo.png") ?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?= web_resource("css/stylebuscar.css") ?>">
+    <link rel="stylesheet" href="<?= web_resource("css/stylehome.css") ?>">
 </head>
 <body>
 <!--- header start --->
@@ -19,20 +19,130 @@
     <a href="/" class="logo">Jota's Wear</a>
     <div class="bx bx-menu" id="menu-icon"></div>
 
+    <!-- Intentando que funcione el login ayudame Dios -->
     <div class="icons">
+
+        <!-- Div donde aparece el correo electrónico y el menú emergente -->
+        <?php if (isset($_SESSION["email"])): ?>
+            <div class="user-email-container">
+                <span class="user-email" id="user-email"><?= htmlspecialchars($email) ?></span>
+                <div class="user-menu" id="user-menu">
+                    <a href="#">Editar perfil</a>
+                    <a href="/registrar/cerrarsesion">Cerrar sesión</a>
+                </div>
+            </div>
+        <?php else: ?>
+            <a href="/registrar"><i class='bx bxs-user'></i></a>
+        <?php endif; ?>
+
+
+        <a href="/carrito"><i class='bx bx-cart'></i></a>
         <a href="/buscar"><i class='bx bx-search'></i></a>
-        <a href="/registrar"><i class='bx bxs-user' ></i></a>
-        <a href="/carrito"><i class='bx bx-cart'></i></i></a>
     </div>
+
 </header>
 <!--- header end --->
 <main>
-    <!--- buscar start --->
+    <div class="hero"></div>
+
     <section>
-        <p>Esta es la sección de buscar aquí estará relacionado a la búsqueda de camisas y sus colecciones</p>
+        <p>Jota's Wear se enfoca en Calidad y Exclusividad, es por eso que cada colección es limitada a 25 piezas. . . Dando un toque único y especial en cada producción, las cuales niños, hombres y mujeres pueden usar.</p>
     </section>
-    <!--- buscar end --->
+    <section>
+        <h1>Colecciones:</h1>
+    </section>
+
+    <div class="shop" id="shop">
+        <!--- Esta sección hay que cambiarlo porque ahora esta manualmente --->
+        <!--- La idea es que se actualice en tiempo real con datos de la DB --->
+        <h1>Marzo Street Vibes</h1>
+        <div class="container">
+            <div class="box">
+                <img src="<?= asset('col2/jota1.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col2/jota2.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col2/jota3.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!--- Esta sección hay que cambiarlo porque ahora esta manualmente --->
+        <!--- La idea es que se actualice en tiempo real con datos de la DB --->
+        <h1>San valentin</h1>
+        <div class="container">
+            <div class="box">
+                <img src="<?= asset('col1/jota1.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col1/jota2.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col1/jota3.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+            <div class="box">
+                <img src="<?= asset('col1/jota4.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <img src="<?= asset('col1/jota5.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <img src="<?= asset('col1/jota6.png') ?>">
+                <h4>I'm a product</h4>
+                <h5>$15.00</h5>
+                <div class="cart">
+                    <a href="#"><i class='bx bxs-cart'></i></a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
     <!--- contact start --->
+    <!--- Esta sección se llama contacto pero es un footer --->
     <section class="contact" id="contact">
         <div class="main-contact">
             <div class="contact-content">
@@ -67,15 +177,16 @@
                 <input type="submit" name="submit" value="Submit" required>
             </form>
         </div>
+        <!--- Se acabó el supuesto footer --->
 
     </section>
 
     <div class="last">
         <p>2024 by Jota's Wear</p>
     </div>
+
 </main>
 <!--- Custom js link --->
 <script src="<?= asset('js/script.js') ?>"></script>
 </body>
 </html>
-
